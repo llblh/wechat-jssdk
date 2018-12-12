@@ -19,7 +19,7 @@ sed -i '' '3i\
 echo -e "\033[32m[ 版本号：$1 ]\033[0m"
 
 # 清除 dist
-rm -r dist
+# rm -r dist
 
 # build
 echo -e "\033[35m[ Build Start ]\033[0m"
