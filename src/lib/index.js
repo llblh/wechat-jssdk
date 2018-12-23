@@ -12,7 +12,7 @@ const openDebug = (isDebug) => {
   const debug = window.location.href.indexOf('debug=true');
   if (debug > -1 || isDebug) {
     const sc = document.createElement('script');
-    sc.src = '//wechatfe.github.io/vconsole/lib/vconsole.min.js?v=3.2.0';
+    sc.src = 'https://wechatfe.github.io/vconsole/lib/vconsole.min.js?v=3.2.0';
     sc.crossorigin = 'true';
     const s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(sc, s);
