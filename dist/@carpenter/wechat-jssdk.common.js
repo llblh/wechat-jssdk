@@ -3465,7 +3465,7 @@ var openDebug = function openDebug(isDebug) {
 
   if (debug > -1 || isDebug) {
     var sc = document.createElement('script');
-    sc.src = '//wechatfe.github.io/vconsole/lib/vconsole.min.js?v=3.2.0';
+    sc.src = 'https://wechatfe.github.io/vconsole/lib/vconsole.min.js?v=3.2.0';
     sc.crossorigin = 'true';
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(sc, s);
