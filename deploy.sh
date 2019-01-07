@@ -11,7 +11,7 @@ fi
 
 # 修改版本
 file='package.json'
-TMP='"version": "'$1'",'
+TMP='\  \"version": "'$1'",'
 sed  -i '' 3d "$file"
 sed -i '' '3i\
 '"$TMP"'
