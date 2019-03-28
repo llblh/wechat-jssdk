@@ -1,5 +1,7 @@
-import 'whatwg-fetch';
 import wx from 'weixin-js-sdk';
+
+require('es6-promise').polyfill();
+require('isomorphic-fetch');
 
 window.wx = wx;
 window.jWeixin = wx;
