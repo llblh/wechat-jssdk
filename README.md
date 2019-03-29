@@ -30,7 +30,7 @@ npm install @carpenter/wechat-jssdk
 import WechatJSSDK from '@carpenter/wechat-jssdk'
 
 const wechat = new WechatJSSDK({
-  appId: 'wxxxxxxxxxxxxx',
+  appId: 'wxxxxxxxxxxxxx', // 可不填，由签名接口返回
   imgUrl: 'http://stor.xxx.xxx',
   link: '',
   title: '我是分享标题',
@@ -44,7 +44,7 @@ const wechat = new WechatJSSDK({
     body: `url=${encodeURIComponent(window.location.href.split('#/')[0])}&appid=wxxxxxxxxxxxxx`,
   },
   ticketSuccess: (res) => {
-    return res;
+    return res; // { timestamp, nonceStr, signature, appId }
   },
 });
 

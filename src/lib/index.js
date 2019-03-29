@@ -245,14 +245,11 @@ class WechatJSSDK {
   config(data) {
     // 获取签名
     const { debug, appId, jsApiList } = this.state;
-    const { timestamp, nonceStr, signature } = data;
     wx.config({
       debug,
       appId,
-      timestamp,
-      nonceStr,
-      signature,
       jsApiList,
+      ...data,
     });
     wx.ready(() => {
       this.ready();
