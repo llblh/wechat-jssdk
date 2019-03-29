@@ -7579,17 +7579,11 @@ function () {
           debug = _this$state.debug,
           appId = _this$state.appId,
           jsApiList = _this$state.jsApiList;
-      var timestamp = data.timestamp,
-          nonceStr = data.nonceStr,
-          signature = data.signature;
-      weixin_js_sdk_default.a.config({
+      weixin_js_sdk_default.a.config(_objectSpread({
         debug: debug,
         appId: appId,
-        timestamp: timestamp,
-        nonceStr: nonceStr,
-        signature: signature,
         jsApiList: jsApiList
-      });
+      }, data));
       weixin_js_sdk_default.a.ready(function () {
         _this2.ready();
 
