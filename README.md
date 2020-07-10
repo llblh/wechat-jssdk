@@ -77,11 +77,8 @@ this.$wechat.setState('title', '我是更新后的标题')
 
 ### 分享事件监听
 ``` js
-// shareTimeline   分享到朋友圈
-// shareAppMessage 分享给朋友
-// shareQQ         分享到QQ
-// shareWeibo      分享到微博
-// shareQzone      分享到空间
+// shareTimeline   分享到朋友圈/分享到QQ空间
+// shareAppMessage 分享给朋友/分享到QQ
 
 this.$wechat.on('shareTimeline', () => {
   console.log('分享到朋友圈');

@@ -91,6 +91,8 @@ class WechatJSSDK {
       appId: appId || '',
       debug: debug || false,
       jsApiList: jsApiList || [
+        'updateAppMessageShareData',
+        'updateTimelineShareData',
         'onMenuShareTimeline',
         'onMenuShareAppMessage',
         'onMenuShareQQ',
@@ -286,8 +288,8 @@ class WechatJSSDK {
         link,
         imgUrl,
       };
-      // 分享到朋友圈
-      wx.onMenuShareTimeline({
+      // 自定义“分享到朋友圈”及“分享到QQ空间”按钮的分享内容
+      wx.updateTimelineShareData({
         ...param,
         success: () => {
           this.emit('shareTimeline');
@@ -296,41 +298,11 @@ class WechatJSSDK {
           errorReport(err);
         },
       });
-      // 分享给朋友
-      wx.onMenuShareAppMessage({
+      // 自定义“分享给朋友”及“分享到QQ”按钮的分享内容
+      wx.updateAppMessageShareData({
         ...param,
         success: () => {
           this.emit('shareAppMessage');
-        },
-        fail: (err) => {
-          errorReport(err);
-        },
-      });
-      // 分享到QQ
-      wx.onMenuShareQQ({
-        ...param,
-        success: () => {
-          this.emit('shareQQ');
-        },
-        fail: (err) => {
-          errorReport(err);
-        },
-      });
-      // 分享到微博
-      wx.onMenuShareWeibo({
-        ...param,
-        success: () => {
-          this.emit('shareWeibo');
-        },
-        fail: (err) => {
-          errorReport(err);
-        },
-      });
-      // 分享到QZone
-      wx.onMenuShareQZone({
-        ...param,
-        success: () => {
-          this.emit('shareQzone');
         },
         fail: (err) => {
           errorReport(err);
