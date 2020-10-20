@@ -27,9 +27,9 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.2.3",
-    "vue": "^2.6.11",
-    "vue-router": "^3.3.4",
-    "vue-template-compiler": "^2.6.11"
+    "vue": "^2.6.12",
+    "vue-router": "^3.4.7",
+    "vue-template-compiler": "^2.6.12"
   },
   "eslintConfig": {
     "root": true,
