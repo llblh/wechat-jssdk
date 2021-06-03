@@ -10,11 +10,11 @@ import List from './List.vue';
 Vue.config.productionTip = false;
 
 const wechat = new WechatJSSDK({
-  ticketUrl: 'http://xxx.com/api/get_jsticket',
+  ticketUrl: 'https://wxb1da4e0fd6ad1262.mp.weixinhost.com/addon/weixin_web_dev_tools?a=get_jsticket',
   ticketConfig: {
     method: 'post',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
-    body: `url=${encodeURIComponent(window.location.href.split('#/')[0])}&appid=wxxxxxxxxxxxxx`,
+    body: `url=${encodeURIComponent(window.location.href.split('#/')[0])}&appid=wxb1da4e0fd6ad1262`,
   },
   ticketSuccess: (res) => {
     if (typeof res === 'object' && !res.err_code) {
@@ -22,8 +22,8 @@ const wechat = new WechatJSSDK({
     }
     return res;
   },
-  appId: 'wxxxxxxxxxxxxx',
-  imgUrl: 'http://stor.xxx.xxx',
+  appId: 'wxb1da4e0fd6ad1262',
+  imgUrl: 'http://stor.weixinhost.com/3/wxhost-images/rf_38d41d9e9bf1fda4e8dc02723beea184',
   link: '',
   title: '我是分享标题',
   desc: '我是分享描述',

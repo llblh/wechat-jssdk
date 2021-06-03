@@ -3974,7 +3974,7 @@ var store = global[SHARED] || (global[SHARED] = {});
 })('versions', []).push({
   version: core.version,
   mode: __webpack_require__("2d00") ? 'pure' : 'global',
-  copyright: '© 2019 Denis Pushkarev (zloirock.ru)'
+  copyright: '© 2020 Denis Pushkarev (zloirock.ru)'
 });
 
 
@@ -3995,7 +3995,7 @@ module.exports = function (key) {
 /***/ "584a":
 /***/ (function(module, exports) {
 
-var core = module.exports = { version: '2.6.11' };
+var core = module.exports = { version: '2.6.12' };
 if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 
 
@@ -4446,7 +4446,7 @@ function normalizeName(name) {
     name = String(name)
   }
   if (/[^a-z0-9\-#$%&'*+.^_`|~!]/i.test(name) || name === '') {
-    throw new TypeError('Invalid character in header field name')
+    throw new TypeError('Invalid character in header field name: "' + name + '"')
   }
   return name.toLowerCase()
 }
@@ -4814,14 +4814,22 @@ function parseHeaders(rawHeaders) {
   // Replace instances of \r\n and \n followed by at least one space or horizontal tab with a space
   // https://tools.ietf.org/html/rfc7230#section-3.2
   var preProcessedHeaders = rawHeaders.replace(/\r?\n[\t ]+/g, ' ')
-  preProcessedHeaders.split(/\r?\n/).forEach(function(line) {
-    var parts = line.split(':')
-    var key = parts.shift().trim()
-    if (key) {
-      var value = parts.join(':').trim()
-      headers.append(key, value)
-    }
-  })
+  // Avoiding split via regex to work around a common IE11 bug with the core-js 3.6.0 regex polyfill
+  // https://github.com/github/fetch/issues/748
+  // https://github.com/zloirock/core-js/issues/751
+  preProcessedHeaders
+    .split('\r')
+    .map(function(header) {
+      return header.indexOf('\n') === 0 ? header.substr(1, header.length) : header
+    })
+    .forEach(function(line) {
+      var parts = line.split(':')
+      var key = parts.shift().trim()
+      if (key) {
+        var value = parts.join(':').trim()
+        headers.append(key, value)
+      }
+    })
   return headers
 }
 
@@ -4838,7 +4846,7 @@ function Response(bodyInit, options) {
   this.type = 'default'
   this.status = options.status === undefined ? 200 : options.status
   this.ok = this.status >= 200 && this.status < 300
-  this.statusText = 'statusText' in options ? options.statusText : ''
+  this.statusText = options.statusText === undefined ? '' : '' + options.statusText
   this.headers = new Headers(options.headers)
   this.url = options.url || ''
   this._initBody(bodyInit)
@@ -5161,7 +5169,7 @@ module.exports = function (it, tag, stat) {
 /***/ "8378":
 /***/ (function(module, exports) {
 
-var core = module.exports = { version: '2.6.11' };
+var core = module.exports = { version: '2.6.12' };
 if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 
 
@@ -6856,7 +6864,7 @@ var store = global[SHARED] || (global[SHARED] = {});
 })('versions', []).push({
   version: core.version,
   mode: __webpack_require__("b8e3") ? 'pure' : 'global',
-  copyright: '© 2019 Denis Pushkarev (zloirock.ru)'
+  copyright: '© 2020 Denis Pushkarev (zloirock.ru)'
 });
 
 
@@ -7372,7 +7380,7 @@ var weixin_js_sdk_default = /*#__PURE__*/__webpack_require__.n(weixin_js_sdk);
 
 
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
@@ -7394,13 +7402,25 @@ var openDebug = function openDebug(isDebug) {
 
   if (debug > -1 || isDebug) {
     var sc = document.createElement('script');
-    sc.src = 'https://wechatfe.github.io/vconsole/lib/vconsole.min.js?v=3.2.0';
+    sc.src = 'https://wechatfe.github.io/lib/vconsole/3.7.0/vconsole.min.js';
     sc.crossorigin = 'true';
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(sc, s);
 
     sc.onload = function () {
-      window.vConsole = new window.VConsole();
+      window.vConsole = new window.VConsole({
+        defaultPlugins: ['system', 'network', 'element', 'storage'],
+        // 可以在此设定要默认加载的面板
+        maxLogNumber: 1000,
+        // disableLogScrolling: true,
+        onReady: function onReady() {
+          // eslint-disable-next-line no-console
+          console.log('vConsole is ready.');
+        },
+        onClearLog: function onClearLog() {}
+      }); // eslint-disable-next-line no-console
+
+      console.info('欢迎使用 vConsole。vConsole 是一个由微信前端团队研发的 Web 前端开发者面板，可用于展示 console 日志，方便开发、调试。');
     };
   }
 };
