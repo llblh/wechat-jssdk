@@ -14,12 +14,24 @@ const openDebug = (isDebug) => {
   const debug = window.location.href.indexOf('debug=true');
   if (debug > -1 || isDebug) {
     const sc = document.createElement('script');
-    sc.src = 'https://wechatfe.github.io/vconsole/lib/vconsole.min.js?v=3.2.0';
+    sc.src = 'https://wechatfe.github.io/lib/vconsole/3.7.0/vconsole.min.js';
     sc.crossorigin = 'true';
     const s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(sc, s);
     sc.onload = () => {
-      window.vConsole = new window.VConsole();
+      window.vConsole = new window.VConsole({
+        defaultPlugins: ['system', 'network', 'element', 'storage'], // 可以在此设定要默认加载的面板
+        maxLogNumber: 1000,
+        // disableLogScrolling: true,
+        onReady: () => {
+          // eslint-disable-next-line no-console
+          console.log('vConsole is ready.');
+        },
+        onClearLog: () => {
+        },
+      });
+      // eslint-disable-next-line no-console
+      console.info('欢迎使用 vConsole。vConsole 是一个由微信前端团队研发的 Web 前端开发者面板，可用于展示 console 日志，方便开发、调试。');
     };
   }
 };
