@@ -14,7 +14,7 @@ const openDebug = (isDebug) => {
   const debug = window.location.href.indexOf('debug=true');
   if (debug > -1 || isDebug) {
     const sc = document.createElement('script');
-    sc.src = 'https://wechatfe.github.io/lib/vconsole/3.7.0/vconsole.min.js';
+    sc.src = 'https://unpkg.com/vconsole@latest/dist/vconsole.min.js';
     sc.crossorigin = 'true';
     const s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(sc, s);
@@ -288,7 +288,7 @@ class WechatJSSDK {
    */
   ready() {
     const {
-      hideMenu, title, desc, link, imgUrl,
+      hideMenu, title, desc, link, imgUrl, jsApiList
     } = this.state;
     if (hideMenu) {
       wx.hideOptionMenu();
@@ -300,26 +300,30 @@ class WechatJSSDK {
         link,
         imgUrl,
       };
-      // 自定义“分享到朋友圈”及“分享到QQ空间”按钮的分享内容
-      wx.updateTimelineShareData({
-        ...param,
-        success: () => {
-          this.emit('shareTimeline');
-        },
-        fail: (err) => {
-          errorReport(err);
-        },
-      });
-      // 自定义“分享给朋友”及“分享到QQ”按钮的分享内容
-      wx.updateAppMessageShareData({
-        ...param,
-        success: () => {
-          this.emit('shareAppMessage');
-        },
-        fail: (err) => {
-          errorReport(err);
-        },
-      });
+      if (jsApiList.indexOf('updateTimelineShareData') > -1) {
+        // 自定义“分享到朋友圈”及“分享到QQ空间”按钮的分享内容
+        wx.updateTimelineShareData({
+          ...param,
+          success: () => {
+            this.emit('shareTimeline');
+          },
+          fail: (err) => {
+            errorReport(err);
+          },
+        });
+      }
+      if (jsApiList.indexOf('updateAppMessageShareData') > -1) {
+        // 自定义“分享给朋友”及“分享到QQ”按钮的分享内容
+        wx.updateAppMessageShareData({
+          ...param,
+          success: () => {
+            this.emit('shareAppMessage');
+          },
+          fail: (err) => {
+            errorReport(err);
+          },
+        });
+      }
     }
   }
 
