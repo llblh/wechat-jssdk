@@ -7393,7 +7393,7 @@ var openDebug = function openDebug(isDebug) {
 
   if (debug > -1 || isDebug) {
     var sc = document.createElement('script');
-    sc.src = 'https://wechatfe.github.io/lib/vconsole/3.7.0/vconsole.min.js';
+    sc.src = 'https://unpkg.com/vconsole@latest/dist/vconsole.min.js';
     sc.crossorigin = 'true';
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(sc, s);
@@ -7725,7 +7725,8 @@ var lib_WechatJSSDK = /*#__PURE__*/function () {
           title = _this$state2.title,
           desc = _this$state2.desc,
           link = _this$state2.link,
-          imgUrl = _this$state2.imgUrl;
+          imgUrl = _this$state2.imgUrl,
+          jsApiList = _this$state2.jsApiList;
 
       if (hideMenu) {
         weixin_js_sdk_default.a.hideOptionMenu();
@@ -7736,25 +7737,31 @@ var lib_WechatJSSDK = /*#__PURE__*/function () {
           desc: desc,
           link: link,
           imgUrl: imgUrl
-        }; // 自定义“分享到朋友圈”及“分享到QQ空间”按钮的分享内容
+        };
 
-        weixin_js_sdk_default.a.updateTimelineShareData(_objectSpread(_objectSpread({}, param), {}, {
-          success: function success() {
-            _this3.emit('shareTimeline');
-          },
-          fail: function fail(err) {
-            errorReport(err);
-          }
-        })); // 自定义“分享给朋友”及“分享到QQ”按钮的分享内容
+        if (jsApiList.indexOf('updateTimelineShareData') > -1) {
+          // 自定义“分享到朋友圈”及“分享到QQ空间”按钮的分享内容
+          weixin_js_sdk_default.a.updateTimelineShareData(_objectSpread(_objectSpread({}, param), {}, {
+            success: function success() {
+              _this3.emit('shareTimeline');
+            },
+            fail: function fail(err) {
+              errorReport(err);
+            }
+          }));
+        }
 
-        weixin_js_sdk_default.a.updateAppMessageShareData(_objectSpread(_objectSpread({}, param), {}, {
-          success: function success() {
-            _this3.emit('shareAppMessage');
-          },
-          fail: function fail(err) {
-            errorReport(err);
-          }
-        }));
+        if (jsApiList.indexOf('updateAppMessageShareData') > -1) {
+          // 自定义“分享给朋友”及“分享到QQ”按钮的分享内容
+          weixin_js_sdk_default.a.updateAppMessageShareData(_objectSpread(_objectSpread({}, param), {}, {
+            success: function success() {
+              _this3.emit('shareAppMessage');
+            },
+            fail: function fail(err) {
+              errorReport(err);
+            }
+          }));
+        }
       }
     }
     /**
