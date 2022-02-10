@@ -1,6 +1,6 @@
 {
   "name": "@carpenter/wechat-jssdk",
-  "version": "0.2.3",
+  "version": "0.2.5",
   "repository": {
     "type": "git",
     "url": "https://github.com/llblh/wechat-jssdk.git"

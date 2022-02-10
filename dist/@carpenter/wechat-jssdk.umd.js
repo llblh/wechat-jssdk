@@ -7734,8 +7734,7 @@ var lib_WechatJSSDK = /*#__PURE__*/function () {
           title = _this$state2.title,
           desc = _this$state2.desc,
           link = _this$state2.link,
-          imgUrl = _this$state2.imgUrl,
-          jsApiList = _this$state2.jsApiList;
+          imgUrl = _this$state2.imgUrl;
 
       if (hideMenu) {
         weixin_js_sdk_default.a.hideOptionMenu();
@@ -7746,31 +7745,43 @@ var lib_WechatJSSDK = /*#__PURE__*/function () {
           desc: desc,
           link: link,
           imgUrl: imgUrl
-        };
+        }; // 自定义“分享到朋友圈”及“分享到QQ空间”按钮的分享内容
 
-        if (jsApiList.indexOf('updateTimelineShareData') > -1) {
-          // 自定义“分享到朋友圈”及“分享到QQ空间”按钮的分享内容
-          weixin_js_sdk_default.a.updateTimelineShareData(_objectSpread(_objectSpread({}, param), {}, {
-            success: function success() {
-              _this3.emit('shareTimeline');
-            },
-            fail: function fail(err) {
-              errorReport(err);
-            }
-          }));
-        }
+        weixin_js_sdk_default.a.updateTimelineShareData(_objectSpread(_objectSpread({}, param), {}, {
+          success: function success() {
+            _this3.emit('shareTimeline');
+          },
+          fail: function fail(err) {
+            errorReport(err);
+          }
+        })); // 自定义“分享给朋友”及“分享到QQ”按钮的分享内容
 
-        if (jsApiList.indexOf('updateAppMessageShareData') > -1) {
-          // 自定义“分享给朋友”及“分享到QQ”按钮的分享内容
-          weixin_js_sdk_default.a.updateAppMessageShareData(_objectSpread(_objectSpread({}, param), {}, {
-            success: function success() {
-              _this3.emit('shareAppMessage');
-            },
-            fail: function fail(err) {
-              errorReport(err);
-            }
-          }));
-        }
+        weixin_js_sdk_default.a.updateAppMessageShareData(_objectSpread(_objectSpread({}, param), {}, {
+          success: function success() {
+            _this3.emit('shareAppMessage');
+          },
+          fail: function fail(err) {
+            errorReport(err);
+          }
+        })); // 分享到朋友圈
+
+        weixin_js_sdk_default.a.onMenuShareTimeline(_objectSpread(_objectSpread({}, param), {}, {
+          success: function success() {
+            _this3.emit('shareTimeline');
+          },
+          fail: function fail(err) {
+            errorReport(err);
+          }
+        })); // 分享给朋友
+
+        weixin_js_sdk_default.a.onMenuShareAppMessage(_objectSpread(_objectSpread({}, param), {}, {
+          success: function success() {
+            _this3.emit('shareAppMessage');
+          },
+          fail: function fail(err) {
+            errorReport(err);
+          }
+        }));
       }
     }
     /**
