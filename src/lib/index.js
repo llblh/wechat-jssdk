@@ -288,7 +288,7 @@ class WechatJSSDK {
    */
   ready() {
     const {
-      hideMenu, title, desc, link, imgUrl, jsApiList
+      hideMenu, title, desc, link, imgUrl,
     } = this.state;
     if (hideMenu) {
       wx.hideOptionMenu();
@@ -300,30 +300,46 @@ class WechatJSSDK {
         link,
         imgUrl,
       };
-      if (jsApiList.indexOf('updateTimelineShareData') > -1) {
-        // 自定义“分享到朋友圈”及“分享到QQ空间”按钮的分享内容
-        wx.updateTimelineShareData({
-          ...param,
-          success: () => {
-            this.emit('shareTimeline');
-          },
-          fail: (err) => {
-            errorReport(err);
-          },
-        });
-      }
-      if (jsApiList.indexOf('updateAppMessageShareData') > -1) {
-        // 自定义“分享给朋友”及“分享到QQ”按钮的分享内容
-        wx.updateAppMessageShareData({
-          ...param,
-          success: () => {
-            this.emit('shareAppMessage');
-          },
-          fail: (err) => {
-            errorReport(err);
-          },
-        });
-      }
+      // 自定义“分享到朋友圈”及“分享到QQ空间”按钮的分享内容
+      wx.updateTimelineShareData({
+        ...param,
+        success: () => {
+          this.emit('shareTimeline');
+        },
+        fail: (err) => {
+          errorReport(err);
+        },
+      });
+      // 自定义“分享给朋友”及“分享到QQ”按钮的分享内容
+      wx.updateAppMessageShareData({
+        ...param,
+        success: () => {
+          this.emit('shareAppMessage');
+        },
+        fail: (err) => {
+          errorReport(err);
+        },
+      });
+      // 分享到朋友圈
+      wx.onMenuShareTimeline({
+        ...param,
+        success: () => {
+          this.emit('shareTimeline');
+        },
+        fail: (err) => {
+          errorReport(err);
+        },
+      });
+      // 分享给朋友
+      wx.onMenuShareAppMessage({
+        ...param,
+        success: () => {
+          this.emit('shareAppMessage');
+        },
+        fail: (err) => {
+          errorReport(err);
+        },
+      });
     }
   }
 
